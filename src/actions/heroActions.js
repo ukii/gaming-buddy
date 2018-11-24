@@ -1,18 +1,18 @@
-import { FETCH_POSTS, NEW_POST } from './types';
+import {FETCH_HEROES, NEW_POST, OPEN_DOTA_API} from './types';
 
-export const fetchPosts = () => dispatch => {
-  fetch('https://api.opendota.com/api/heroStats')
+export const fetchHeroes = () => dispatch => {
+  fetch(OPEN_DOTA_API + '/heroStats')
     .then(res => res.json())
-    .then(posts =>
+    .then(heroes =>
       dispatch({
-        type: FETCH_POSTS,
-        payload: posts
+        type: FETCH_HEROES,
+        payload: heroes
       })
     );
 };
 
 export const createPost = postData => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/posts', {
+  fetch(OPEN_DOTA_API, {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
@@ -27,3 +27,4 @@ export const createPost = postData => dispatch => {
       })
     );
 };
+

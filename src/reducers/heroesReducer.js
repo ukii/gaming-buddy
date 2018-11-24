@@ -1,21 +1,21 @@
-import { FETCH_POSTS, NEW_POST } from '../actions/types';
+import { FETCH_HEROES, NEW_POST } from '../actions/types';
 
 const initialState = {
-  items: [],
-  item: {}
+  heroes: [],
 };
 
 export default function(state = initialState, action) {
+  console.log(action.payload);
   switch (action.type) {
-    case FETCH_POSTS:
+    case FETCH_HEROES:
       return {
         ...state,
-        items: action.payload
+          heroes: action.payload
       };
     case NEW_POST:
       return {
         ...state,
-        item: action.payload
+          heroes: action.payload
       };
     default:
       return state;
