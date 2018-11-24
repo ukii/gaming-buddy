@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {fetchMatches} from "../actions/matchesAction";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,8 +8,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {fetchHeroes} from "../actions/heroActions";
+import {fetchMatches} from "../actions/matchesAction";
+import UserWords from "./UserWords";
+import {FETCH_WORDS, OPEN_DOTA_API} from "../actions/types";
+
 
 class User extends Component {
+
+    constructor(){
+        super();
+        this.state = {
+            words: {},
+        };
+        this.fetchWords();
+    }
 
     componentWillMount() {
         this.props.fetchMatches();
@@ -59,6 +70,15 @@ class User extends Component {
         return hero.localized_name;
     }
 
+    fetchWords() {
+        fetch(OPEN_DOTA_API + '/players/378574717/wordcloud')
+            .then(res => res.json())
+            .then(words => {
+                console.log(words);
+                    this.setState({words: words.all_word_counts})
+                })
+    };
+
     render() {
         return (
             <Paper className={this.classes.root}>
@@ -72,7 +92,7 @@ class User extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.matches.matches.map(match => {
+                        {this.props.matches.matches.slice(0,10).map(match => {
                             return (
                                 <TableRow key={match.match_id}>
                                     <TableCell style={{width : '30%'}} component="th" scope="row">
@@ -89,6 +109,9 @@ class User extends Component {
                         })}
                     </TableBody>
                 </Table>
+                <UserWords words={this.state.words}>
+
+                </UserWords>
             </Paper>
         );
     }
@@ -99,11 +122,13 @@ User.propTypes = {
     fetchHeroes: PropTypes.func.isRequired,
     matches: PropTypes.array,
     heroes: PropTypes.array,
+    words: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
     matches: state.matches,
     heroes: state.heroes,
+    words: state.words,
 });
 
 export default connect(mapStateToProps, {fetchHeroes, fetchMatches})(User);
