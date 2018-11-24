@@ -10,8 +10,18 @@ import Paper from '@material-ui/core/Paper';
 import {fetchHeroes} from "../actions/heroActions";
 import {fetchMatches} from "../actions/matchesAction";
 import UserWords from "./UserWords";
+import {FETCH_WORDS, OPEN_DOTA_API} from "../actions/types";
+
 
 class User extends Component {
+
+    constructor(){
+        super();
+        this.state = {
+            words: {},
+        };
+        this.fetchWords();
+    }
 
     componentWillMount() {
         this.props.fetchMatches();
@@ -45,8 +55,19 @@ class User extends Component {
     }
 
     findHeroImageById(id){
+        console.log(this.props.words);
+            console.log(this.props.matches);
         return "test";
     }
+
+    fetchWords() {
+        fetch(OPEN_DOTA_API + '/players/378574717/wordcloud')
+            .then(res => res.json())
+            .then(words => {
+                console.log(words);
+                    this.setState({words: words.all_word_counts})
+                })
+    };
 
     render() {
         return (
@@ -77,7 +98,7 @@ class User extends Component {
                         })}
                     </TableBody>
                 </Table>
-                <UserWords words={this.props.matches.matches}>
+                <UserWords words={this.state.words}>
 
                 </UserWords>
             </Paper>
@@ -88,15 +109,15 @@ class User extends Component {
 User.propTypes = {
     fetchMatches: PropTypes.func.isRequired,
     fetchHeroes: PropTypes.func.isRequired,
-    fetchWords: PropTypes.func.isRequired,
     matches: PropTypes.array,
     heroes: PropTypes.array,
-    words: PropTypes.array,
+    words: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
     matches: state.matches,
     heroes: state.heroes,
+    words: state.words,
 });
 
 export default connect(mapStateToProps, {fetchHeroes, fetchMatches})(User);
