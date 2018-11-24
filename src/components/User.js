@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {fetchMatches} from "../actions/matchesAction";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {fetchHeroes} from "../actions/heroActions";
+import {fetchMatches} from "../actions/matchesAction";
+import UserWords from "./UserWords";
 
 class User extends Component {
 
@@ -44,7 +45,6 @@ class User extends Component {
     }
 
     findHeroImageById(id){
-        console.log(this.props.heroes);
         return "test";
     }
 
@@ -62,7 +62,7 @@ class User extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.matches.matches.map(match => {
+                        {this.props.matches.matches.slice(0,10).map(match => {
                             return (
                                 <TableRow key={match.match_id}>
                                     <TableCell component="th" scope="row">{this.findHeroImageById(match.hero_id)}</TableCell>
@@ -77,6 +77,9 @@ class User extends Component {
                         })}
                     </TableBody>
                 </Table>
+                <UserWords words={this.props.matches.matches}>
+
+                </UserWords>
             </Paper>
         );
     }
@@ -85,8 +88,10 @@ class User extends Component {
 User.propTypes = {
     fetchMatches: PropTypes.func.isRequired,
     fetchHeroes: PropTypes.func.isRequired,
+    fetchWords: PropTypes.func.isRequired,
     matches: PropTypes.array,
     heroes: PropTypes.array,
+    words: PropTypes.array,
 };
 
 const mapStateToProps = state => ({

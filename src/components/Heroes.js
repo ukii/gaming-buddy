@@ -35,7 +35,7 @@ class Heroes extends Component {
                                     <img style={{width: '15%'}}
                                          src='https://cdn2.iconfinder.com/data/icons/game-1-2/512/mana_potion_1-512.png'/> : {hero.base_mana}
                                 </Typography>
-                                <Typography gutterBottom variant="headline" component="h2">
+                                 <Typography gutterBottom variant="headline" component="h2">
                                     {hero.localized_name}
                                 </Typography>
                                 <Typography component="int">
