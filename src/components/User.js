@@ -24,7 +24,7 @@ class User extends Component {
         this.fetchWords();
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchMatches();
         this.props.fetchHeroes();
     }
