@@ -44,34 +44,46 @@ class User extends Component {
     }
 
     findHeroImageById(id){
-        console.log(this.props.heroes);
-        return "test";
+
+        const { heroes } = this.props.heroes;
+        const hero = heroes.find(hero => hero.id === id);
+
+        return 'https://api.opendota.com' + hero.img;
+    }
+
+    findHeroNameById(id){
+
+        const { heroes } = this.props.heroes;
+        const hero = heroes.find(hero => hero.id === id);
+
+        return hero.localized_name;
     }
 
     render() {
         return (
             <Paper className={this.classes.root}>
-                <Table className={this.classes.table}>
+                <Table style={{width: '40%'}} className={this.classes.table}>
                     <TableHead>
                         <TableRow>
                             <TableCell>Hero</TableCell>
+                            <TableCell>Hero Name</TableCell>
                             <TableCell>Match Outcome</TableCell>
-                            <TableCell>Kills</TableCell>
-                            <TableCell>Deaths</TableCell>
-                            <TableCell>Assists</TableCell>
+                            <TableCell>K/D/A</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.props.matches.matches.map(match => {
                             return (
                                 <TableRow key={match.match_id}>
-                                    <TableCell component="th" scope="row">{this.findHeroImageById(match.hero_id)}</TableCell>
+                                    <TableCell style={{width : '30%'}} component="th" scope="row">
+                                        <img style={{width : '50%'}} src={this.findHeroImageById(match.hero_id)}/>
+                                        {/*<span>{this.findHeroNameById(match.hero_id)}</span>*/}
+                                        </TableCell>
+                                    <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
                                     <TableCell
                                         style={{fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
                                         {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}</TableCell>
-                                    <TableCell>{match.kills}</TableCell>
-                                    <TableCell>{match.assists}</TableCell>
-                                    <TableCell>{match.deaths}</TableCell>
+                                    <TableCell style={{fontWeight: ' bold'}}>{match.kills} / {match.deaths} / {match.assists}</TableCell>
                                 </TableRow>
                             );
                         })}
