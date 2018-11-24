@@ -20,20 +20,28 @@ class Heroes extends Component {
     //     var number = parseInt("76561198844623045".substring(3)) - 61197960265728;
     // }
 
+    calculateHeroHealth(baseStr, strPerLvl){
+        return parseInt(baseStr) * 18 + 200;
+    }
+
+    calculateHeroMana(baseInt, intPerLvl){
+        return parseInt(baseInt)* 12 + 75;
+    }
+
     render() {
         return (
             <div>
                 <ul>
-                    {this.props.heroes.heroes.map(function (hero) {
-                        return <Card style={{width: '17%', display: 'inline-block', margin: '10px'}} key={hero.id}>
+                    {this.props.heroes.heroes.map(hero => {
+                        return ( <Card style={{width: '17%', display: 'inline-block', margin: '10px'}} key={hero.id}>
                             <CardMedia style={{height: 0, paddingTop: '56.25%'}}
                                        image={`https://api.opendota.com${hero.img}`} title="title"/>
                             <CardContent>
                                 <Typography gutterBottom variant="headline" component="h2">
                                     <img style={{width: '15%'}}
-                                         src='https://cdn.iconscout.com/icon/premium/png-256-thumb/medical-heart-heartcare-care-healthcare-treatment-health-27479.png'/> : {hero.base_health}
+                                         src='https://cdn.iconscout.com/icon/premium/png-256-thumb/medical-heart-heartcare-care-healthcare-treatment-health-27479.png'/> : {this.calculateHeroHealth(hero.base_str, hero.str_gain)}
                                     <img style={{width: '15%'}}
-                                         src='https://cdn2.iconfinder.com/data/icons/game-1-2/512/mana_potion_1-512.png'/> : {hero.base_mana}
+                                         src='https://cdn2.iconfinder.com/data/icons/game-1-2/512/mana_potion_1-512.png'/> : {this.calculateHeroMana(hero.base_int, hero.int_gain)}
                                 </Typography>
                                  <Typography gutterBottom variant="headline" component="h2">
                                     {hero.localized_name}
@@ -59,8 +67,8 @@ class Heroes extends Component {
                                     More about {hero.localized_name}
                                 </Button>
                             </CardActions>
-                        </Card>;
-                    })}
+                        </Card>
+                        )})}
                 </ul>
             </div>
         );
