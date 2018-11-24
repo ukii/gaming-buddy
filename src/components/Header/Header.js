@@ -18,7 +18,7 @@ export const Header = () => (
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                     <div className="nav-link">
-                        <NavLink to='/' activeClassName='menu selected' exact={true}>HOME</NavLink>
+                        <NavLink to='/' activeClassName='menu selected' exact={true}>Heroes</NavLink>
                     </div>
                 </li>
                 <li className="nav-item">
