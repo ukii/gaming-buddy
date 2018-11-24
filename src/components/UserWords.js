@@ -7,9 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import WordCloud from "react-d3-cloud";
 
 const styles = {
-    card: {
-        width: '60%',
-    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -36,7 +33,7 @@ function UserWords(props) {
     const rotate = word => word.value % Math.floor(Math.random() * Math.floor(360));
 
     return (
-        <Card className={classes.card}>
+        <Card>
             <CardContent>
                 <Typography variant="h5" component="h2">
                     Word Map
@@ -44,7 +41,6 @@ function UserWords(props) {
                 <WordCloud data={data} fontSizeMapper={fontSizeMapper} rotate={rotate}/>
 
             </CardContent>
-
         </Card>
     );
 }
