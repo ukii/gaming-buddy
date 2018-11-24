@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
-
-import Heroes from './components/Heroes';
+import User from './components/User';
 
 import store from './store';
 
@@ -17,7 +16,7 @@ class App extends Component {
             <h1 className="App-title">Welcome to React</h1>
           </header>
           <hr />
-          <Heroes />
+          <User />
         </div>
       </Provider>
     );
