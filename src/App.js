@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 import store from './store';
 import Heroes from "./components/Heroes";
+import StartScreen from "./components/StartScreen";
 import HeroDetails from "./components/HeroDetails";
 import MenuBar from "./components/MenuBar";
 
@@ -20,6 +21,7 @@ class App extends Component {
                             <Route path="/user" component={User}/>
                             <Route path="/heroes" component={Heroes}/>
                             <Route path="/hero/details/:id" component={HeroDetails}/>
+                            <Route path="/" component={StartScreen}/>
                         </Switch>
                     </BrowserRouter>
                 </div>
