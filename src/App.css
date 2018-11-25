@@ -31,3 +31,26 @@
     transform: rotate(360deg);
   }
 }
+
+.hover {
+  position: relative;
+}
+
+.hover .hover__no-hover {
+  opacity: 0;
+}
+
+.hover .hover__hover {
+  opacity: 1;
+}
+
+.hover__hover {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.hover__no-hover {
+  opacity: 1;
+}
+

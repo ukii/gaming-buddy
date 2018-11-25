@@ -639,7 +639,7 @@ babel-plugin-istanbul@^4.0.0:
   dependencies:
     find-up "^2.1.0"
     istanbul-lib-instrument "^1.7.5"
-    test-exclude "^4.1.1"
+    onMouseOver-exclude "^4.1.1"
 
 babel-plugin-jest-hoist@^20.0.3:
   version "20.0.3"
@@ -2375,7 +2375,7 @@ enzyme-adapter-react-16@^1.6.0:
     object.values "^1.0.4"
     prop-types "^15.6.2"
     react-is "^16.6.1"
-    react-test-renderer "^16.0.0-0"
+    react-onMouseOver-renderer "^16.0.0-0"
 
 enzyme-adapter-utils@^1.9.0:
   version "1.9.0"
@@ -6064,7 +6064,7 @@ react-scripts@1.1.1:
 
 react-test-renderer@^16.0.0-0:
   version "16.6.3"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.6.3.tgz#5f3a1a7d5c3379d46f7052b848b4b72e47c89f38"
+  resolved "https://registry.yarnpkg.com/react-onMouseOver-renderer/-/react-onMouseOver-renderer-16.6.3.tgz#5f3a1a7d5c3379d46f7052b848b4b72e47c89f38"
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
@@ -7064,7 +7064,7 @@ term-size@^1.2.0:
 
 test-exclude@^4.1.1:
   version "4.2.1"
-  resolved "https://registry.yarnpkg.com/test-exclude/-/test-exclude-4.2.1.tgz#dfa222f03480bca69207ca728b37d74b45f724fa"
+  resolved "https://registry.yarnpkg.com/onMouseOver-exclude/-/onMouseOver-exclude-4.2.1.tgz#dfa222f03480bca69207ca728b37d74b45f724fa"
   dependencies:
     arrify "^1.0.1"
     micromatch "^3.1.8"
