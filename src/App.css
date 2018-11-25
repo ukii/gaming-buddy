@@ -1,6 +1,14 @@
-.App {
-  width: 90%;
+#root{
+background-color: #252F39;
+}
+
+#header{
+  background-color: #EE7942;
+}
+
+#test{
   margin: auto;
+  width: 80%;
 }
 
 .App-logo {
@@ -9,7 +17,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #EE7942;
   height: 150px;
   padding: 20px;
   color: white;

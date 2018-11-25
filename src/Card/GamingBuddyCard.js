@@ -21,7 +21,7 @@ class GamingBuddyCard extends Component {
     onMouseOver(){
         setTimeout(
             function() {
-                this.setState({customHtml:   <Card  style={{width: '17%', display: 'inline-block', margin: '10px', height: '420px'}} onMouseEnter={this.onMouseOver.bind(this)}
+                this.setState({customHtml:   <Card  style={{width: '17%', display: 'inline-block', margin: '10px', height: '395px'}} onMouseEnter={this.onMouseOver.bind(this)}
                                                     onMouseLeave={this.onMouseOut.bind(this)}><HoverCard hero={this.state.currentHero} />
                     </Card>});
             }

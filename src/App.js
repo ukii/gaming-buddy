@@ -16,6 +16,7 @@ class App extends Component {
             <Provider store={store}>
                 <div className="App">
                     <MenuBar />
+                    <div id="test">
                     <BrowserRouter>
                         <Switch>
                             <Route path="/user" component={User}/>
@@ -24,6 +25,7 @@ class App extends Component {
                             <Route path="/" component={StartScreen}/>
                         </Switch>
                     </BrowserRouter>
+                    </div>
                 </div>
             </Provider>
         );

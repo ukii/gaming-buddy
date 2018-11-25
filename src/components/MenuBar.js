@@ -22,7 +22,7 @@ class MenuBar extends Component {
 
     render() {
         return (<div className={this.styles.root}>
-                <AppBar position="static">
+                <AppBar id="header" position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={this.styles.grow}>
                             Gaming Buddy
