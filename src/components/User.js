@@ -8,9 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {fetchHeroes} from "../actions/heroActions";
-import {fetchMatches} from "../actions/matchesAction";
 import UserWords from "./UserWords";
-import {FETCH_WORDS, OPEN_DOTA_API} from "../actions/types";
+import {OPEN_DOTA_API} from "../actions/types";
 import Grid from "@material-ui/core/es/Grid/Grid";
 
 
@@ -20,14 +19,19 @@ class User extends Component {
         super();
         this.state = {
             words: {},
+            player: {},
+            matches: [],
         };
-        this.fetchWords();
     }
 
     componentDidMount() {
-        this.props.fetchMatches();
         this.props.fetchHeroes();
+        this.setState({player: this.props.location.state.linkState.player});
+        console.log(this.state);
+        this.fetchWords(this.props.location.state.linkState.player.account_id);
+        this.fetchMatches(this.props.location.state.linkState.player.account_id);
     }
+
 
     classes = theme => ({
         root: {
@@ -58,9 +62,12 @@ class User extends Component {
     findHeroImageById(id){
 
         const { heroes } = this.props.heroes;
-        const hero = heroes.find(hero => hero.id === id);
+        let hero = heroes.find(hero => hero.id === id);
 
-        return 'https://api.opendota.com' + hero.icon;
+        if (hero != null) {
+            return 'https://api.opendota.com' + hero.icon;
+        }
+        return null
     }
 
     findHeroNameById(id){
@@ -68,82 +75,68 @@ class User extends Component {
         const { heroes } = this.props.heroes;
         const hero = heroes.find(hero => hero.id === id);
 
-        return hero.localized_name;
+        if (hero != null) {
+            return hero.localized_name;
+        }
+        return null
     }
 
-    fetchWords() {
-        fetch(OPEN_DOTA_API + '/players/378574717/wordcloud')
+    fetchWords(userId) {
+        console.log(userId);
+        fetch(OPEN_DOTA_API + '/players/'+ userId +'/wordcloud')
             .then(res => res.json())
             .then(words => {
                     this.setState({words: words.all_word_counts})
                 })
     };
+    fetchMatches(userId){
+        console.log(userId);
+        fetch(OPEN_DOTA_API + '/players/'+ userId + '/recentMatches')
+            .then(res => res.json())
+            .then(matches => {
+                console.log(matches);
+                this.setState({matches: matches});
+            })
+    };
 
     render() {
+        console.log(this.state);
         return (
-
-            <Paper className={this.classes.root}>
-                <Table style={{width: '40%'}} className={this.classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Hero</TableCell>
-                            <TableCell>Hero Name</TableCell>
-                            <TableCell>Match Outcome</TableCell>
-                            <TableCell>K/D/A</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.matches.matches.slice(0,10).map(match => {
-                            return (
-                                <TableRow key={match.match_id}>
-                                    <TableCell style={{width : '30%'}} component="th" scope="row">
-                                        <img style={{width : '50%'}} src={this.findHeroImageById(match.hero_id)}/>
-                                        </TableCell>
-                                    <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
-                                    <TableCell
-                                        style={{fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
-                                        {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}</TableCell>
-                                    <TableCell style={{fontWeight: ' bold'}}>{match.kills} / {match.deaths} / {match.assists}</TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-                <UserWords words={this.state.words}>
-
-                </UserWords>
-            </Paper>
             <Grid container>
                     <Grid item xs={4}>
-                    <Paper className={this.classes.root}>
-                        <Table className={this.classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell >Hero</TableCell>
-                                <TableCell>Hero Name</TableCell>
-                                <TableCell>Match Outcome</TableCell>
-                                <TableCell>K/D/A</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.matches.matches.slice(0,10).map(match => {
-                                return (
-                                    <TableRow key={match.match_id}>
-                                        <TableCell component="th" scope="row">
-                                            <img src={this.findHeroImageById(match.hero_id)}/>
-                                            {/*<span>{this.findHeroNameById(match.hero_id)}</span>*/}
-                                            </TableCell>
-                                        <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
-                                        <TableCell
-                                            style={{fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
-                                            {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}</TableCell>
-                                        <TableCell style={{fontWeight: ' bold'}}>{match.kills} / {match.deaths} / {match.assists}</TableCell>
+                        <Paper className={this.classes.root}>
+                            <Table className={this.classes.table}>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell >Hero</TableCell>
+                                        <TableCell>Hero Name</TableCell>
+                                        <TableCell>Match Outcome</TableCell>
+                                        <TableCell>K/D/A</TableCell>
                                     </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                        </Table>
-                    </Paper>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.matches.slice(0,10).map(match => {
+                                        return (
+                                            <TableRow key={match.match_id}>
+                                                <TableCell component="th" scope="row">
+                                                    <img src={this.findHeroImageById(match.hero_id)}/>
+                                                    <span>{this.findHeroNameById(match.hero_id)}</span>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {this.findHeroNameById(match.hero_id)}
+                                                </TableCell>
+                                                <TableCell style={{width: '15%', fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
+                                                    {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}
+                                                </TableCell>
+                                                <TableCell style={{fontWeight: ' bold'}}>
+                                                    {match.kills} / {match.deaths} / {match.assists}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </Paper>
                     </Grid>
                 <Grid item xs={7}>
                 <UserWords words={this.state.words} />
@@ -154,7 +147,6 @@ class User extends Component {
 }
 
 User.propTypes = {
-    fetchMatches: PropTypes.func.isRequired,
     fetchHeroes: PropTypes.func.isRequired,
     matches: PropTypes.array,
     heroes: PropTypes.array,
@@ -162,9 +154,8 @@ User.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    matches: state.matches,
     heroes: state.heroes,
     words: state.words,
 });
 
-export default connect(mapStateToProps, {fetchHeroes, fetchMatches})(User);
+export default connect(mapStateToProps, {fetchHeroes})(User);
