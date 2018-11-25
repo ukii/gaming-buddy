@@ -9,6 +9,7 @@ import {OPEN_DOTA_API} from "../actions/types";
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Link from "react-router-dom/es/Link";
+import Moment from 'react-moment';
 
 class StartScreen extends Component {
     constructor(){
@@ -42,8 +43,15 @@ class StartScreen extends Component {
     });
 
     saveUsername(username){
+        console.log('onchange');
         this.setState({ currentUsername: username.target.value});
     };
+
+    keyPress(e){
+        if(e.keyCode == 13){
+           this.getUsersByUsername();
+        }
+    }
 
     getUsersByUsername(){
         let username = this.state.currentUsername;
@@ -58,7 +66,7 @@ class StartScreen extends Component {
                                 pathname: '/user',
                                 state: { linkState: {player}}
                             }}>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} style={{padding: "10px"}}>
                                 <Grid item xs={2}>
                                     <CardMedia style={{width: "40%", paddingTop: '40%'}}
                                                image={player.avatarfull} title="title"/>
@@ -67,9 +75,9 @@ class StartScreen extends Component {
                                     <Typography component="h5" variant="h5">
                                         {player.personaname}
                                     </Typography>
-                                    <Typography variant="subtitle1">
-                                        Last played: {player.last_match_time}
-                                    </Typography>
+                                    {player.last_match_time && <Typography variant="subtitle1">
+                                        Last played: <Moment>{player.last_match_time}</Moment>
+                                    </Typography>}
                                     <Typography variant="subtitle1">
                                         Account id: {player.account_id}
                                     </Typography>
@@ -107,6 +115,7 @@ class StartScreen extends Component {
                                         shrink: true,
                                     }}
                                     onChange={e => this.saveUsername(e)}
+                                    onKeyDown={this.keyPress.bind(this)}
                                 />
                             </Grid>
                         </Grid>
@@ -121,26 +130,6 @@ class StartScreen extends Component {
             </Paper>
             <Paper className={this.styles.root}>
                 {this.state.players}
-                <Link to="/heroes">
-                <Grid item xs={12} xl container>
-                    <Grid item xs={2}>
-                        <CardMedia style={{width: "40%", paddingTop: '40%'}}
-                                   image="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f3/f3ad758352824c39f5d1c7118c3848546c7b03c4_full.jpg" title="title"/>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <Typography component="h5" variant="h5">
-                            username
-                        </Typography>
-                        <Typography variant="subtitle1">
-                            Mac Miller
-                        </Typography>
-                        <Typography variant="subtitle1">
-                            userid
-                        </Typography>
-
-                    </Grid>
-                </Grid>
-                </Link>
             </Paper>
             </div>
             /*<Grid

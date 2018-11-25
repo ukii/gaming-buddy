@@ -102,43 +102,46 @@ class User extends Component {
     render() {
         return (
             <Grid container>
-                    <Grid item xs={4}>
-                        <Paper className={this.classes.root}>
-                            <Table className={this.classes.table}>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell >Hero</TableCell>
-                                        <TableCell>Hero Name</TableCell>
-                                        <TableCell>Match Outcome</TableCell>
-                                        <TableCell>K/D/A</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.state.matches.slice(0,10).map(match => {
-                                        return (
-                                            <TableRow key={match.match_id}>
-                                                <TableCell component="th" scope="row">
-                                                    <img src={this.findHeroImageById(match.hero_id)}/>
-                                                    <span>{this.findHeroNameById(match.hero_id)}</span>
-                                                </TableCell>
-                                                <TableCell>
-                                                    {this.findHeroNameById(match.hero_id)}
-                                                </TableCell>
-                                                <TableCell style={{width: '15%', fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
-                                                    {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}
-                                                </TableCell>
-                                                <TableCell style={{fontWeight: ' bold'}}>
-                                                    {match.kills} / {match.deaths} / {match.assists}
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </Paper>
-                    </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={4}>
+                    <Paper className={this.classes.root}>
+                        <Table className={this.classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >Hero</TableCell>
+                                    <TableCell>Hero Name</TableCell>
+                                    <TableCell>Match Outcome</TableCell>
+                                    <TableCell>K/D/A</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.matches.slice(0,10).map(match => {
+                                    return (
+                                        <TableRow key={match.match_id}>
+                                            <TableCell component="th" scope="row">
+                                                <img src={this.findHeroImageById(match.hero_id)}/>
+                                                <span>{this.findHeroNameById(match.hero_id)}</span>
+                                            </TableCell>
+                                            <TableCell>
+                                                {this.findHeroNameById(match.hero_id)}
+                                            </TableCell>
+                                            <TableCell style={{width: '15%', fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
+                                                {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}
+                                            </TableCell>
+                                            <TableCell style={{fontWeight: ' bold'}}>
+                                                {match.kills} / {match.deaths} / {match.assists}
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </Grid>
+                <Grid item xs={8}>
                 <UserWords words={this.state.words} />
+                </Grid>
+                <Grid item xs={4}>
+
                 </Grid>
             </Grid>
         );
