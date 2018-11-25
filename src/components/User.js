@@ -11,6 +11,7 @@ import {fetchHeroes} from "../actions/heroActions";
 import {fetchMatches} from "../actions/matchesAction";
 import UserWords from "./UserWords";
 import {FETCH_WORDS, OPEN_DOTA_API} from "../actions/types";
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 
 class User extends Component {
@@ -59,7 +60,7 @@ class User extends Component {
         const { heroes } = this.props.heroes;
         const hero = heroes.find(hero => hero.id === id);
 
-        return 'https://api.opendota.com' + hero.img;
+        return 'https://api.opendota.com' + hero.icon;
     }
 
     findHeroNameById(id){
@@ -74,13 +75,13 @@ class User extends Component {
         fetch(OPEN_DOTA_API + '/players/378574717/wordcloud')
             .then(res => res.json())
             .then(words => {
-                console.log(words);
                     this.setState({words: words.all_word_counts})
                 })
     };
 
     render() {
         return (
+
             <Paper className={this.classes.root}>
                 <Table style={{width: '40%'}} className={this.classes.table}>
                     <TableHead>
@@ -112,6 +113,42 @@ class User extends Component {
 
                 </UserWords>
             </Paper>
+            <Grid container>
+                    <Grid item xs={4}>
+                    <Paper className={this.classes.root}>
+                        <Table className={this.classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell >Hero</TableCell>
+                                <TableCell>Hero Name</TableCell>
+                                <TableCell>Match Outcome</TableCell>
+                                <TableCell>K/D/A</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.matches.matches.slice(0,10).map(match => {
+                                return (
+                                    <TableRow key={match.match_id}>
+                                        <TableCell component="th" scope="row">
+                                            <img src={this.findHeroImageById(match.hero_id)}/>
+                                            {/*<span>{this.findHeroNameById(match.hero_id)}</span>*/}
+                                            </TableCell>
+                                        <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
+                                        <TableCell
+                                            style={{fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
+                                            {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}</TableCell>
+                                        <TableCell style={{fontWeight: ' bold'}}>{match.kills} / {match.deaths} / {match.assists}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                        </Table>
+                    </Paper>
+                    </Grid>
+                <Grid item xs={7}>
+                <UserWords words={this.state.words} />
+                </Grid>
+            </Grid>
         );
     }
 }
