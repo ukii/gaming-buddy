@@ -101,8 +101,8 @@ class User extends Component {
 
     render() {
         return (
-            <Grid container>
-                <Grid item xs={4}>
+            <Grid container style={{width: '100%'}}>
+                <Grid item xs={6}>
                     <Paper className={this.classes.root}>
                         <Table className={this.classes.table}>
                             <TableHead>
@@ -137,7 +137,7 @@ class User extends Component {
                         </Table>
                     </Paper>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                 <UserWords words={this.state.words} />
                 </Grid>
                 <Grid item xs={4}>

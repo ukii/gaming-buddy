@@ -1,9 +1,14 @@
-#root{
-background-color: #252F39;
+#container{
+background-color: white;
 }
 
 #header{
   background-color: #EE7942;
+}
+
+#aasd{
+  background-color: white;
+  margin-top: 25px;
 }
 
 #test{

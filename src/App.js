@@ -14,9 +14,9 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <div className="App">
+                <div id="container" >
                     <MenuBar />
-                    <div id="test">
+                    <div id="test" className="App">
                     <BrowserRouter>
                         <Switch>
                             <Route path="/user" component={User}/>

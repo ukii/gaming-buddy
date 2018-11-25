@@ -33,7 +33,7 @@ function UserWords(props) {
     const rotate = word => word.value % Math.floor(Math.random() * Math.floor(360));
 
     return (
-        <Card>
+        <Card style={{width: ''}}>
             <CardContent>
                 <Typography variant="h5" component="h2">
                     Word Map
