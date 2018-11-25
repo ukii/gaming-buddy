@@ -24,9 +24,11 @@ class MenuBar extends Component {
         return (<div className={this.styles.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit" className={this.styles.grow}>
-                            Gaming Buddy
-                        </Typography>
+                        <Button href="/" color="inherit">
+                            <Typography variant="h6" color="inherit" className={this.styles.grow}>
+                                Gaming Buddy
+                            </Typography>
+                        </Button>
                         <Button href="/heroes" color="inherit">Heroes</Button>
                         <Button href="/user" color="inherit">User</Button>
                     </Toolbar>

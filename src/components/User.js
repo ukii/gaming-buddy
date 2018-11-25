@@ -21,6 +21,7 @@ class User extends Component {
             words: {},
             player: {},
             matches: [],
+            heroesPlayed: [],
         };
     }
 
@@ -30,6 +31,7 @@ class User extends Component {
         console.log(this.state);
         this.fetchWords(this.props.location.state.linkState.player.account_id);
         this.fetchMatches(this.props.location.state.linkState.player.account_id);
+        this.fetchHeroesPlayed(this.props.location.state.linkState.player.account_id);
     }
 
 
@@ -82,7 +84,6 @@ class User extends Component {
     }
 
     fetchWords(userId) {
-        console.log(userId);
         fetch(OPEN_DOTA_API + '/players/'+ userId +'/wordcloud')
             .then(res => res.json())
             .then(words => {
@@ -90,7 +91,6 @@ class User extends Component {
                 })
     };
     fetchMatches(userId){
-        console.log(userId);
         fetch(OPEN_DOTA_API + '/players/'+ userId + '/recentMatches')
             .then(res => res.json())
             .then(matches => {
@@ -98,6 +98,14 @@ class User extends Component {
                 this.setState({matches: matches});
             })
     };
+    fetchHeroesPlayed(userId){
+        fetch(OPEN_DOTA_API + '/players/'+ userId + '/heroes')
+            .then(res => res.json())
+            .then(heroes => {
+                this.setState({heroesPlayed: heroes.slice(0,10)});
+            })
+    }
+
 
     render() {
         return (
@@ -114,7 +122,7 @@ class User extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.matches.slice(0,10).map(match => {
+                                {this.state.matches.slice(0,12).map(match => {
                                     return (
                                         <TableRow key={match.match_id}>
                                             <TableCell component="th" scope="row">
@@ -138,7 +146,7 @@ class User extends Component {
                     </Paper>
                 </Grid>
                 <Grid item xs={8}>
-                <UserWords words={this.state.words} />
+                    <UserWords words={this.state.words} />
                 </Grid>
                 <Grid item xs={4}>
 
