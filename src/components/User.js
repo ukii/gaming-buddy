@@ -81,6 +81,38 @@ class User extends Component {
 
     render() {
         return (
+
+            <Paper className={this.classes.root}>
+                <Table style={{width: '40%'}} className={this.classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Hero</TableCell>
+                            <TableCell>Hero Name</TableCell>
+                            <TableCell>Match Outcome</TableCell>
+                            <TableCell>K/D/A</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.props.matches.matches.slice(0,10).map(match => {
+                            return (
+                                <TableRow key={match.match_id}>
+                                    <TableCell style={{width : '30%'}} component="th" scope="row">
+                                        <img style={{width : '50%'}} src={this.findHeroImageById(match.hero_id)}/>
+                                        </TableCell>
+                                    <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
+                                    <TableCell
+                                        style={{fontWeight: 'bold', color: this.getColumnColor(this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win))}}>
+                                        {this.calculatePlayerMatchOutcome(match.player_slot, match.radiant_win)}</TableCell>
+                                    <TableCell style={{fontWeight: ' bold'}}>{match.kills} / {match.deaths} / {match.assists}</TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+                <UserWords words={this.state.words}>
+
+                </UserWords>
+            </Paper>
             <Grid container>
                     <Grid item xs={4}>
                     <Paper className={this.classes.root}>
