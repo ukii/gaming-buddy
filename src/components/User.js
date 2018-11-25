@@ -23,7 +23,7 @@ class User extends Component {
         this.fetchWords();
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchMatches();
         this.props.fetchHeroes();
     }
@@ -97,7 +97,6 @@ class User extends Component {
                                 <TableRow key={match.match_id}>
                                     <TableCell style={{width : '30%'}} component="th" scope="row">
                                         <img style={{width : '50%'}} src={this.findHeroImageById(match.hero_id)}/>
-                                        {/*<span>{this.findHeroNameById(match.hero_id)}</span>*/}
                                         </TableCell>
                                     <TableCell>{this.findHeroNameById(match.hero_id)}</TableCell>
                                     <TableCell

@@ -9,23 +9,26 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom'
+
 
 class Heroes extends Component {
     componentWillMount() {
         this.props.fetchHeroes();
         this.props.fetchMatches();
+        console.log(this.props.match.params.id);
     }
 
     // convertFrom64To32SteamId(){
     //     var number = parseInt("76561198844623045".substring(3)) - 61197960265728;
     // }
 
-    calculateHeroHealth(baseStr, strPerLvl){
+    calculateHeroHealth(baseStr){
         return parseInt(baseStr) * 18 + 200;
     }
 
-    calculateHeroMana(baseInt, intPerLvl){
-        return parseInt(baseInt)* 12 + 75;
+    calculateHeroMana(baseInt) {
+        return parseInt(baseInt) * 12 + 75;
     }
 
     render() {
@@ -39,9 +42,9 @@ class Heroes extends Component {
                             <CardContent>
                                 <Typography gutterBottom variant="headline" component="h2">
                                     <img style={{width: '15%'}}
-                                         src='https://cdn.iconscout.com/icon/premium/png-256-thumb/medical-heart-heartcare-care-healthcare-treatment-health-27479.png'/> : {this.calculateHeroHealth(hero.base_str, hero.str_gain)}
+                                         src='https://cdn.iconscout.com/icon/premium/png-256-thumb/medical-heart-heartcare-care-healthcare-treatment-health-27479.png'/> : {this.calculateHeroHealth(hero.base_str)}
                                     <img style={{width: '15%'}}
-                                         src='https://cdn2.iconfinder.com/data/icons/game-1-2/512/mana_potion_1-512.png'/> : {this.calculateHeroMana(hero.base_int, hero.int_gain)}
+                                         src='https://cdn2.iconfinder.com/data/icons/game-1-2/512/mana_potion_1-512.png'/> : {this.calculateHeroMana(hero.base_int)}
                                 </Typography>
                                  <Typography gutterBottom variant="headline" component="h2">
                                     {hero.localized_name}
@@ -64,7 +67,10 @@ class Heroes extends Component {
                             </CardContent>
                             <CardActions>
                                 <Button size="small" color="primary" href="" target="_blank">
-                                    More about {hero.localized_name}
+                                <Link to={{
+                                    pathname: '/hero/details/1',
+                                    state: { linkState: {hero} }
+                                }}> More about {hero.localized_name} </Link>
                                 </Button>
                             </CardActions>
                         </Card>
